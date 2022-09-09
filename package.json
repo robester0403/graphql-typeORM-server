@@ -1,0 +1,27 @@
+{
+  "name": "graphql-typeorm-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robester0403/graphql-typeORM-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robester0403/graphql-typeORM-server/issues"
+  },
+  "homepage": "https://github.com/robester0403/graphql-typeORM-server#readme",
+  "devDependencies": {
+    "@types/node": "^18.7.16",
+    "typescript": "^4.8.3"
+  },
+  "dependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
