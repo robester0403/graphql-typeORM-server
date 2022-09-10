@@ -5,6 +5,7 @@ import { buildSchema } from "type-graphql";
 import { TaskResolver } from "./resolvers/task";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 import { createConnection } from "typeorm";
+import { Task } from "./entities/Task";
 // import { typeDefs } from './schema';
 // import { resolvers } from './resolvers';
 
@@ -17,7 +18,7 @@ const main = async () => {
       username: "postgres",
       password: "123456",
       database: "cope-db",
-      entities: [],
+      entities: [Task],
       synchronize: true,
     });
   } catch (err) {
