@@ -3,15 +3,34 @@ import express, { Express } from "express";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { TaskResolver } from "./resolvers/task";
+import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
+import { createConnection } from "typeorm";
 // import { typeDefs } from './schema';
 // import { resolvers } from './resolvers';
 
 const main = async () => {
+  try {
+    await createConnection({
+      type: "postgres",
+      host: "localhost",
+      port: 5432,
+      username: "postgres",
+      password: "123456",
+      database: "cope-db",
+      entities: [],
+      synchronize: true,
+    });
+  } catch (err) {
+    console.log(err);
+    throw new Error("Error connecting to database");
+  }
+
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
       resolvers: [TaskResolver],
       validate: false,
     }),
+    plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
   });
   await apolloServer.start();
   const app: Express = express();
