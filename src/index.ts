@@ -33,10 +33,14 @@ const main = async () => {
     }),
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
   });
+
   await apolloServer.start();
   const app: Express = express();
+
   apolloServer.applyMiddleware({ app });
+
   app.get("/", (_req, res) => res.send("hello world"));
+
   const PORT = process.env.PORT || 8000;
   app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 };
