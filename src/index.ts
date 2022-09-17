@@ -4,23 +4,25 @@ import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { TaskResolver } from "./resolvers/task";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
-import { createConnection } from "typeorm";
+import { DataSource } from "typeorm";
 import { Task } from "./entities/Task";
+import { Tag } from "./entities/Tag";
 // import { typeDefs } from './schema';
 // import { resolvers } from './resolvers';
 
 const main = async () => {
   try {
-    await createConnection({
+    const AppDataSource = await new DataSource({
       type: "postgres",
       host: "localhost",
       port: 5432,
       username: "postgres",
       password: "123456",
       database: "cope-db",
-      entities: [Task],
+      entities: [Task, Tag],
       synchronize: true,
     });
+    AppDataSource.initialize();
   } catch (err) {
     console.log(err);
     throw new Error("Error connecting to database");

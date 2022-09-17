@@ -6,11 +6,14 @@ import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
+  ManyToMany,
+  JoinTable,
 } from "typeorm";
+import { Tag } from "./Tag";
 
 // @Field(type => [Rate]) (recommended, explicit [ ] syntax for Array types)
 // @Field(itemType => Rate) (array is inferred from reflection - also works but is prone to errors)
-@Entity()
+@Entity("task")
 @ObjectType()
 export class Task extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -32,4 +35,21 @@ export class Task extends BaseEntity {
   @Column()
   @Field(() => String, { nullable: false })
   description: string;
+
+  @ManyToMany(() => Tag)
+  @Field(() => [Tag], { nullable: true })
+  @JoinTable({
+    name: "tasks_tags",
+    joinColumn: {
+      name: "task",
+      referencedColumnName: "id",
+      foreignKeyConstraintName: "fk_tasks_tags_task",
+    },
+    inverseJoinColumn: {
+      name: "tag",
+      referencedColumnName: "id",
+      foreignKeyConstraintName: "fk_tasks_tags_tag",
+    },
+  })
+  tags: Tag[] | null;
 }

@@ -11,7 +11,7 @@ export class TaskResolver {
 
   @Query(() => Task, { nullable: true })
   searchTask(@Arg("id", () => Int) id: number): Promise<Task | null> {
-    return Task.findOne({ where: { id: id } });
+    return Task.findOneBy({ id: id });
   }
 
   // Create
@@ -26,7 +26,7 @@ export class TaskResolver {
   // Delete
   @Mutation(() => Boolean)
   async deleteTask(@Arg("id", () => Int) id: number): Promise<boolean> {
-    if (await Task.findOne({ where: { id: id } })) {
+    if (await Task.findOneBy({ id: id })) {
       // need to review this one
       await Task.delete(id);
       return true;
@@ -43,8 +43,8 @@ export class TaskResolver {
 
     @Arg("description", () => String)
     description: string
-  ) {
-    const task = Task.findOne({ where: { id: id } });
+  ): boolean | null {
+    const task = Task.findOneBy({ id: id });
     if (!task) {
       return null;
     }
