@@ -23,5 +23,5 @@ export class Tag extends BaseEntity {
 
   @ManyToMany(() => Task, { nullable: true })
   @Field(() => [Task])
-  tasks: Task[] | null;
+  tasks: Promise<Task[]> | null;
 }

@@ -36,8 +36,8 @@ export class Task extends BaseEntity {
   @Field(() => String, { nullable: false })
   description: string;
 
-  @ManyToMany(() => Tag)
   @Field(() => [Tag], { nullable: true })
+  @ManyToMany(() => Tag)
   @JoinTable({
     name: "tasks_tags",
     joinColumn: {
